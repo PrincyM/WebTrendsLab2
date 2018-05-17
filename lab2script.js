@@ -26,11 +26,12 @@ var days;
 })(days || (days = {}));
 //html 
 window.onload = function () {
+    // Part 1
     var pTodayDate = document.getElementById("p--today-date");
-    console.log(pTodayDate);
+    //console.log(pTodayDate);
     // Today's date
     var today = new Date();
-    console.log(today);
+    //console.log(today);
     // today's month
     var todayMonth = months[today.getMonth()];
     //console.log(todayMonth);
@@ -41,4 +42,26 @@ window.onload = function () {
     if (pTodayDate != null) {
         pTodayDate.innerHTML = "Today is " + todayDayOfTheWeek + ", " + todayMonth + " " + today.getDate() + ", " + today.getFullYear();
     }
+    // Part 2
+    var birthdayButton = document.getElementById("button--birthday");
+    if (birthdayButton != null) {
+        birthdayButton.onclick = birthdayButtonOnClick;
+    }
 }; // end of onload function
+function birthdayButtonOnClick() {
+    var bdayInput = document.getElementById("input--date-picker");
+    var bdayMessage = document.getElementById("p--birthday-message");
+    var bdayDate = new Date(bdayInput.value + 'GMT-0400');
+    bdayMessage.innerHTML = getBdayString(bdayDate);
+}
+function getBdayString(selectedBdayDate) {
+    var today = new Date();
+    var bdayToday = selectedBdayDate; // if today is the birthday date of the user
+    // check if bday is today. If yes, display 'Happy Birthday' or else show when the user's bday is
+    if (bdayToday.toDateString() == today.toDateString()) {
+        return "Happy Birthday";
+    }
+    else {
+        return "Your birthday will be on " + days[bdayToday.getDay()] + ", " + months[bdayToday.getMonth()] + " " + bdayToday.getDate() + ", " + bdayToday.getFullYear();
+    }
+}
